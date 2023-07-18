@@ -20,7 +20,10 @@
     "nodemailer": "^6.9.3",
     "nodemon": "^2.0.15"
   },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
   "engines": {
     "node": ">=14.20.1"
-},
+}
 }
