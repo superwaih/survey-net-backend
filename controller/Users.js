@@ -40,7 +40,18 @@ const submitInformation = async (req, res) => {
       to: "sheriffhardewale@gmail.com",
       subject: "New Account",
       // text: 'That was easy!',
-      html: `<h1>Someone just submitted  in with the following info <p>${currentUser} </p> , please visit the admin page to verify their document `,
+      html: `<h5>Someone just submitted  in with the following info </h5>
+      <p>with the following information </p> 
+      <p>firstname:${currentUser.firstname} </p>
+      <p>email:${currentUser.email} </p>
+
+      <p>lastname:${currentUser.lastname} </p>
+      <p>verification Method:${currentUser.verification_type} </p>
+
+
+      
+
+      please visit the admin page to verify their document `,
     };
     res.status(200).json({ msg: "done",  payload:currentUser });
     transporter.sendMail(mailOptions, function (error, info) {
