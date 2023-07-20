@@ -68,8 +68,8 @@ const submitInformation = async (req, res) => {
     
     if (currentUser) {
       const mailOptions = {
-        from: "sheriffhardewale@gmail.com",
-        to: "sheriffhardewale@gmail.com",
+        from: "olaegbejoe@gmail.com",
+        to: "olaegbejoe@gmail.com",
         subject: "New Verification Request",
         html: `<h5>Someone just submitted  in with the following info </h5>
         <p>with the following information </p> 
@@ -78,6 +78,7 @@ const submitInformation = async (req, res) => {
   
         <p>lastname:${currentUser.lastname} </p>
         <p>verification Method:${currentUser.verification_type} </p>
+        <p>Document: ${currentUser.document[0]}</p>
   
   
         
