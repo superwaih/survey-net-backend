@@ -40,9 +40,9 @@ const submitInformation = async (req, res) => {
       to: "sheriffhardewale@gmail.com",
       subject: "New Account",
       // text: 'That was easy!',
-      html: `<h1>Someone just submitted  in with the following info ${currentUser}, please visit the admin page to verify their document `,
+      html: `<h1>Someone just submitted  in with the following info <p>${currentUser} </p> , please visit the admin page to verify their document `,
     };
-    res.status(200).json({ msg: "done" });
+    res.status(200).json({ msg: "done",  payload:currentUser });
     transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
         console.log(error);
@@ -54,7 +54,7 @@ const submitInformation = async (req, res) => {
       msg: "User not found",
     });
 
-    res.status(200).json(currentUser);
+   
   }
 };
 
