@@ -38,6 +38,21 @@ const createUser = async (req, res) => {
 const submitInformation = async (req, res) => {
   const email = req.params.email;
   const { images } = req.body;
+
+  const uploadedImgs = images?.map(async image=>{
+    const upload =  await cloudinrary.uploader.upload(image,
+         { 
+           upload_preset: 'unsigned_upload',
+           allowed_formats : ['png', 'jpg', 'jpeg', 'svg', 'ico', 'jfif', 'webp'],
+       }, 
+         function(error, result) {
+             if(error){
+                 console.log(error)
+             }
+              });
+     return upload
+   })
+ 
   try {
     const fulfilled = await Promise.all(uploadedImgs).then((values) => {
       return values;
@@ -55,7 +70,6 @@ const submitInformation = async (req, res) => {
         from: "sheriffhardewale@gmail.com",
         to: "sheriffhardewale@gmail.com",
         subject: "New Verification Request",
-        // text: 'That was easy!',
         html: `<h5>Someone just submitted  in with the following info </h5>
         <p>with the following information </p> 
         <p>firstname:${currentUser.firstname} </p>
