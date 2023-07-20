@@ -18,20 +18,14 @@ const getAllUsers = async (req, res) => {
 };
 
 const createUser = async (req, res) => {
-  const { email, firstname, lastname } = req.body;
+  const { email} = req.body;
   const userExists = await User.findOne({email})
   if(userExists ){
-    throw new BadRequestError("User already exists")
+    res.status(StatusCodes.BAD_REQUEST).json({payload: "user already exists", status: StatusCodes.BAD_REQUEST})
 }
-  // const user = await User.create({
-  //   email: email,
-  //   firstname: firstname,
-  //   lastname: lastname,
-  // });
-
   const user = await User.create({...req.body})
    
-    res.status(StatusCodes.CREATED).json({user: {user}})
+    res.status(StatusCodes.CREATED).json({payload: user, status: StatusCodes.CREATED})
 };
 const submitInformation = async (req, res) => {
   const email = req.params.email;
