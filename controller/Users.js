@@ -38,7 +38,7 @@ const submitInformation = async (req, res) => {
     const mailOptions = {
       from: "sheriffhardewale@gmail.com",
       to: "sheriffhardewale@gmail.com",
-      subject: "New Account",
+      subject: "New Verification Request",
       // text: 'That was easy!',
       html: `<h5>Someone just submitted  in with the following info </h5>
       <p>with the following information </p> 
