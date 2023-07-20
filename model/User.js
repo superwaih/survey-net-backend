@@ -32,8 +32,8 @@ const UserSchema = new mongoose.Schema({
     default: ""
   },
   document: {
-    type: String,
-    default: ""
+    type: Array,
+    default: []
   },
   images: {
     type: Array,

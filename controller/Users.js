@@ -40,7 +40,7 @@ const submitInformation = async (req, res) => {
   const { images } = req.body;
 
   const uploadedImgs = images?.map(async image=>{
-    const upload =  await cloudinrary.uploader.upload(image,
+    const upload =  await cloudinary.uploader.upload(image,
          { 
            upload_preset: 'unsigned_upload',
            allowed_formats : ['png', 'jpg', 'jpeg', 'svg', 'ico', 'jfif', 'webp'],
@@ -65,6 +65,7 @@ const submitInformation = async (req, res) => {
       { ...req.body, document: publicIds },
       { returnOriginal: false }
     );
+    
     if (currentUser) {
       const mailOptions = {
         from: "sheriffhardewale@gmail.com",
@@ -83,6 +84,7 @@ const submitInformation = async (req, res) => {
   
         please visit the admin page to verify their document `,
       };
+     
       res.status(200).json({ msg: "done", payload: currentUser });
       transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
