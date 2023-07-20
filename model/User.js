@@ -31,6 +31,14 @@ const UserSchema = new mongoose.Schema({
     type: String,
     default: ""
   },
+  document: {
+    type: String,
+    default: ""
+  },
+  images: {
+    type: String,
+    default: ""
+  },
   verified_status:{
     type: Boolean,
     default: false,
