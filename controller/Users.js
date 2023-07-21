@@ -146,7 +146,7 @@ const verifyStatus = async (req, res) => {
         please contact our support for more information. `,
       };
 
-      res.status(200).json({ msg: "done", payload: currentUser });
+      
       transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
           console.log(error);
