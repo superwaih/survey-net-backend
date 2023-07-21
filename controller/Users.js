@@ -121,6 +121,46 @@ const updatePaymentStatus = async (req, res) => {
     res.status(500).json(err);
   }
 };
+
+const verifyStatus = async (req, res) => {
+  const email = req.params.email;
+
+  try {
+    const currentUser = await User.findOneAndUpdate(
+      { email: email },
+      { ...req.body },
+      { returnOriginal: false }
+    );
+
+    if (currentUser) {
+      const mailOptions = {
+        from: "olaegbejoe@gmail.com",
+        to: email,
+        subject: "Update on Verification Request",
+        html: `<h5>Your documents have been   </h5>
+       <p>${currentUser.verified_status === true ? "Approved" : "Rejected"}</p>
+  
+  
+        
+  
+        please contact our support for more information. `,
+      };
+
+      res.status(200).json({ msg: "done", payload: currentUser });
+      transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          console.log(error);
+        } else {
+        }
+      });
+      res.status(200).json({ msg: "done", payload: currentUser });
+    }else{
+      res.status(404).json({msg: "user not found"})
+    }
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
 const getSingleUser = async (req, res) => {
   const userid = req.params.id;
   const currentUser = await User.findById(userid);
@@ -130,6 +170,7 @@ const getSingleUser = async (req, res) => {
 module.exports = {
   getAllUsers,
   getSingleUser,
+  verifyStatus,
   createUser,
   submitInformation,
   updatePaymentStatus,
