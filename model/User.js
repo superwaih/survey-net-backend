@@ -43,6 +43,10 @@ const UserSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  phone_number:{
+    type: Number,
+    default: 0,
+  },
   payment_status:{
     type: String,
     default: "pending",

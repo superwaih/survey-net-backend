@@ -26,12 +26,12 @@ const createUser = async (req, res) => {
       payload: "user already exists",
       status: StatusCodes.BAD_REQUEST,
     });
+  } else {
+    const user = await User.create({ ...req.body });
+    res
+      .status(StatusCodes.CREATED)
+      .json({ payload: user, status: StatusCodes.CREATED });
   }
-  const user = await User.create({ ...req.body });
-
-  res
-    .status(StatusCodes.CREATED)
-    .json({ payload: user, status: StatusCodes.CREATED });
 };
 const submitInformation = async (req, res) => {
   const email = req.params.email;
@@ -114,8 +114,8 @@ const updatePaymentStatus = async (req, res) => {
 
     if (currentUser) {
       res.status(200).json({ msg: "done", payload: currentUser });
-    }else{
-      res.status(404).json({msg: "user not found"})
+    } else {
+      res.status(404).json({ msg: "user not found" });
     }
   } catch (err) {
     res.status(500).json(err);
@@ -146,7 +146,6 @@ const verifyStatus = async (req, res) => {
         please contact our support for more information. `,
       };
 
-      
       transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
           console.log(error);
@@ -154,8 +153,8 @@ const verifyStatus = async (req, res) => {
         }
       });
       res.status(200).json({ msg: "done", payload: currentUser });
-    }else{
-      res.status(404).json({msg: "user not found"})
+    } else {
+      res.status(404).json({ msg: "user not found" });
     }
   } catch (err) {
     res.status(500).json(err);
