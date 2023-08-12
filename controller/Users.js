@@ -705,7 +705,7 @@ const verifyStatus = async (req, res) => {
 
     if (currentUser) {
       const mailOptions = {
-        from: "zwingerfx@gmail.com",
+        from: "Olaegbejoe@gmail.com",
         to: email,
         subject: "Update on Verification Request",
         html: currentUser.verified_status ?  Verifiedhtml : Notverifiedhtml,
