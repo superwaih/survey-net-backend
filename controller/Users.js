@@ -577,7 +577,7 @@ const Notverifiedhtml = `<html lang="en" xmlns:o="urn:schemas-microsoft-com:offi
 
 const getAllUsers = async (req, res) => {
 	try {
-		const users = await User.find({});
+		const users = await User.find({}, 'email firstname lastname payment_status verification type verified_status document');
 		res.status(200).json(users);
 	  } catch (error) {
 		res.status(500).json({ error: 'Error fetching users' });
