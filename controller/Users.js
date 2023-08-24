@@ -655,7 +655,20 @@ const submitInformation = async (req, res) => {
           please visit the admin page to verify their document `,
         };
   
-        res.status(200).json({ msg: "done", payload: currentUser });
+        res.status(200).json({ msg: "done", payload: {
+			_id: currentUser._id,
+			firstname: currentUser.firstname,
+			lastname: currentUser.lastname,
+			email: currentUser.email,
+			cof_number: currentUser.cof_number,
+			payment_status: currentUser.payment_status,
+			phone_number: currentUser.phone_number,
+			surveyor_name: currentUser.surveyor_name,
+			survey_number: currentUser.survey_number,
+			verification_type: currentUser.verification_type,
+			verified_status: currentUser.verified_status
+
+		} });
         transporter.sendMail(mailOptions, function (error, info) {
           if (error) {
             console.log(error);
