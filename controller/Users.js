@@ -602,83 +602,83 @@ const createUser = async (req, res) => {
   }
 };
 const submitInformation = async (req, res) => {
-  const email = req.params.email;
-  const { images } = req.body;
-  const userExists = await User.findOne({email})
-  if(userExists){
-    const uploadedImgs = images?.map(async (image) => {
-      const upload = await cloudinary.uploader.upload(
-        image,
-        {
-          upload_preset: "unsigned_upload",
-          allowed_formats: ["png", "jpg", "jpeg", "svg", "ico", "jfif", "webp"],
-        },
-        function (error, result) {
-          if (error) {
-            console.log(error);
-          }
-        }
-      );
-      return upload;
-    });
+	const email = req.params.email;
+	const { images } = req.body;
   
-    try {
-      const fulfilled = await Promise.all(uploadedImgs).then((values) => {
-        return values;
-      });
-      const publicIds = fulfilled.map((image) => {
-        return image.url;
-      });
-      const currentUser = await User.findOneAndUpdate(
-        { email: email },
-        { ...req.body, document: publicIds },
-        { returnOriginal: false }
-      );
+	if (userExists) {
+	  const uploadedImgs = images?.map(async (image) => {
+		const upload = await cloudinary.uploader.upload(
+		  image,
+		  {
+			upload_preset: "unsigned_upload",
+			allowed_formats: ["png", "jpg", "jpeg", "svg", "ico", "jfif", "webp"],
+		  },
+		  function (error, result) {
+			if (error) {
+			  console.log(error);
+			}
+		  }
+		);
+		return upload;
+	  });
   
-      if (currentUser) {
-        const mailOptions = {
-          from: "olaegbejoe@gmail.com",
-          to: "olaegbejoe@gmail.com",
-          subject: "New Verification Request",
-          html: `<h5>Someone just submitted  in with the following info </h5>
-          <p>with the following information </p> 
-          <p>firstname:${currentUser.firstname} </p>
-          <p>email:${currentUser.email} </p>
-    
-          <p>lastname:${currentUser.lastname} </p>
-          <p>verification Method:${currentUser.verification_type} </p>
-          <p>Document: ${currentUser.document[0]}</p>
-    
-    
-          
-    
-          please visit the admin page to verify their document `,
-        };
+	  try {
+		const fulfilled = await Promise.all(uploadedImgs).then((values) => {
+		  return values;
+		});
+		const publicIds = fulfilled.map((image) => {
+		  return image.url;
+		});
+		const currentUser = await User.findOneAndUpdate(
+		  { email: email },
+		  { ...req.body, document: publicIds },
+		  { returnOriginal: false }
+		);
   
-        res.status(200).json({ msg: "done", payload: currentUser });
-        transporter.sendMail(mailOptions, function (error, info) {
-          if (error) {
-            console.log(error);
-          } else {
-          }
-        });
-      } else {
-        res.status(404).json({
-          msg: "User not found",
-        });
-      }
-    } catch (err) {
-      res.status(500).json(err);
-    }
-  }else{
-    res.status(StatusCodes.BAD_REQUEST).json({
-      payload: "You've not created an account",
-      status: StatusCodes.BAD_REQUEST,
-    });
-  }
-
- 
-};
+		if (currentUser) {
+		  const mailOptions = {
+			from: "olaegbejoe@gmail.com",
+			to: "olaegbejoe@gmail.com",
+			subject: "New Verification Request",
+			html: `<h5>Someone just submitted  in with the following info </h5>
+			<p>with the following information </p> 
+			<p>firstname:${currentUser.firstname} </p>
+			<p>email:${currentUser.email} </p>
+	  
+			<p>lastname:${currentUser.lastname} </p>
+			<p>verification Method:${currentUser.verification_type} </p>
+			<p>Document: ${currentUser.document[0]}</p>
+	  
+	  
+			
+	  
+			please visit the admin page to verify their document `,
+		  };
+  
+		  res.status(200).json({ msg: "done", payload: currentUser });
+		  transporter.sendMail(mailOptions, function (error, info) {
+			if (error) {
+			  console.log(error);
+			} else {
+			}
+		  });
+		} else {
+		  res.status(404).json({
+			msg: "User not found",
+		  });
+		}
+	  } catch (err) {
+		res.status(500).json(err);
+	  }
+	} else {
+	  res.status(StatusCodes.BAD_REQUEST).json({
+		payload: "You've not created an account",
+		status: StatusCodes.BAD_REQUEST,
+	  });
+	}
+  
+   
+  };
 
 const updatePaymentStatus = async (req, res) => {
   const email = req.params.email;
